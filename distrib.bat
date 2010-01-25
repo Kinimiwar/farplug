@@ -1,21 +1,20 @@
-@mkdir .build
-@cd .build
-
 @call setenv /x86
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DFARAPI18=1 ..
-nmake -nologo distrib
+nmake -nologo release=1 clean
+nmake -nologo release=1 distrib installer
 @if errorlevel 1 goto error
-@copy *.7z ..
-@rm -r *
+@copy Release.x86\*.7z .
+@copy Release.x86\*.msi .
+nmake -nologo release=1 clean
 
 @call setenv /x64
 
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DFARAPI18=1 ..
-nmake -nologo distrib
+nmake -nologo release=1 clean
+nmake -nologo release=1 distrib installer
 @if errorlevel 1 goto error
-@copy *.7z ..
-@rm -r *
+@copy Release.x64\*.7z .
+@copy Release.x64\*.msi .
+nmake -nologo release=1 clean
 
 @goto end
 
@@ -23,6 +22,3 @@ nmake -nologo distrib
 @echo TERMINATED WITH ERRORS
 
 :end
-
-@cd ..
-@rm -r .build

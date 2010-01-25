@@ -1,5 +1,7 @@
 #pragma once
 
+extern HINSTANCE g_h_instance;
+
 wstring get_system_message(HRESULT hr);
 wstring get_console_title();
 bool wait_for_single_object(HANDLE handle, DWORD timeout);
@@ -57,6 +59,7 @@ public:
   void set_bool(const wchar_t* name, bool value);
   void set_int(const wchar_t* name, unsigned value);
   void set_str(const wchar_t* name, const wstring& value);
+  void delete_value(const wchar_t* name);
 };
 
 class FindFile: private NonCopyable {
@@ -134,6 +137,6 @@ class Icon: private NonCopyable {
 protected:
   HICON h_icon;
 public:
-  Icon(WORD icon_id, int width, int height);
+  Icon(HMODULE h_module, WORD icon_id, int width, int height);
   ~Icon();
 };
